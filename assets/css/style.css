@@ -2,6 +2,12 @@
     margin: auto;
 }
 
+.pic {
+    background: white;
+    text-align: center;
+
+}
+
 .card-header {
     background: lightblue;
 }
