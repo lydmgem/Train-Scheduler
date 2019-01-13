@@ -1,0 +1,23 @@
+.container {
+    margin: auto;
+}
+
+.card-header {
+    background: lightblue;
+}
+
+.card-p {
+    margin-bottom: 0;
+}
+
+.addtrain-card, .currenttrain-card {
+    margin-top: 30px;
+    border: 1px solid;
+    border-color: lightblue;
+}
+
+.btn {
+    background: lightblue;
+    color: black;
+    border: none;
+}
