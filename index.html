@@ -7,13 +7,16 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+    
     <title>Train Scheduler</title>
   </head>
   <body>
     
     <div class="container">
       <div class="pic">
-        <img src="assets/images/train.png" class="img-fluid" id="train-pic" alt="Responsive image">
+        <img src="assets/images/train.png" class="img-fluid" id="train-pic" alt="Train">
       </div>
       
       <div class="currenttrain-card">
@@ -34,9 +37,8 @@
               </tr>
               
             </thead>
-            <tbody>
-              <tr id="results-row">
-              </tr>
+            <tbody id="results-body">
+              
             </tbody>
           </table>
           
@@ -74,6 +76,8 @@
         </div>
       </div>
     </div>
+
+    <!-- jQuery -->
     <script type="text/javascript" src="assets/javascript/app.js"></script>
   </body>
   </html>
