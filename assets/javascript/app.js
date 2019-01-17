@@ -12,10 +12,11 @@
 // Variable to reference database
   var database = firebase.data();
 
-// On click function for the submit button to grab the user input
+// Capture button click
 $("#submit-btn").on("click", function(event){
     event.preventDefault();
     
+    // Grabbed values from text-boxes
     var name = $("#train-name").val().trim();
     var destination = $("#destination").val().trim();
     var firstTime = $("#first-train-time").val().trim();
