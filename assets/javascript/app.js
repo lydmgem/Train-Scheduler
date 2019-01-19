@@ -12,24 +12,50 @@
 // Variable to reference database
   var database = firebase.data();
 
+// Initial values for the input fields
+  var name = "";
+  var destination = "";
+  var firstTime = "";
+  var frequency = "";
+
 // Capture button click
 $("#submit-btn").on("click", function(event){
     event.preventDefault();
     
     // Grabbed values from text-boxes
-    var name = $("#train-name").val().trim();
-    var destination = $("#destination").val().trim();
-    var firstTime = $("#first-train-time").val().trim();
-    var frequency = $("#frequency").val().trim();
+    name = $("#train-name").val().trim();
+    destination = $("#destination").val().trim();
+    firstTime = $("#first-train-time").val().trim();
+    frequency = $("#frequency").val().trim();
 
     console.log(name);
     console.log(destination);
     console.log(firstTime);
     console.log(frequency);
 
-    // Append the information taken from the user input to the train schedule table
-    $("#results-body").append("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + firstTime + "</td><td>" + frequency + "</td></tr>");
+    // Code for handling the push
+    database.ref().push({
+      name: name,
+      destination: destination,
+      firstTime: firstTime,
+      frequency: frequency
+    });
 
-    // Appending the information from Firebase to the train schedule table
+  });
 
+// Firebase watcher .on("child_added")
+database.ref().on("child_added", function(snapshot) {
+  var sv = snapshot.val();
+
+  console.log(sv.name);
+  console.log(sv.destination);
+  console.log(sv.firstTime);
+  console.log(sv.frequency);
+
+  // Append the information taken from the user input to the train schedule table
+  $("#results-body").append("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + nextArrival + "</td><td>" + minsAway + "</td></tr>");
+
+  // Handle the errors
+}, function(errorObject) {
+  console.log("Errors handled: " + errorObject.code)
 });
