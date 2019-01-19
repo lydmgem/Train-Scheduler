@@ -17,6 +17,8 @@
   var destination = "";
   var firstTime = "";
   var frequency = "";
+  var nextArrival = "";
+  var minsAway = "";
 
 // Capture button click
 $("#submit-btn").on("click", function(event){
@@ -28,47 +30,56 @@ $("#submit-btn").on("click", function(event){
     firstTime = $("#first-train-time").val().trim();
     frequency = $("#frequency").val().trim();
 
-    console.log(name); 
-    console.log(destination);
-    console.log(firstTime);
-    console.log(frequency);
+    // Moment.js function to convert and calculate the arrival time
+    var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+    console.log(firstTimeConverted);
+    
+    var currentTime = moment();
+    console.log("Currently: " + moment(currentTime).format("hh:mm"));
+    
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("Difference in Time: " + diffTime);
+    
+    var tRemainder = diffTime % frequency;
+    console.log(tRemainder);
+    
+    var minutesTillTrain = frequency - tRemainder;
+    console.log("Minutes until Train: " + minutesTillTrain);
+    
+    var nextTrain = moment().add(minutesTillTrain, "minutes");
+    console.log("Arrival: " + moment(nextTrain).format("hh:mm"));
 
-    // Code for handling the set
-    database.ref().push().set({
+    // Code for setting values in the database
+    database.ref().push({
       name: name,
       destination: destination,
-      firstTime: firstTime,
-      frequency: frequency
+      firstTime: firstTimeConverted,
+      frequency: frequency,
+      nextArrival: nextTrain,
+      minsAway: minutesTillTrain
     });
-
-    
   });
-  // Firebase watcher + initial loader for .on("value")
-  database.ref().on("value", function(snapshot) {
+
+  // Firebase watcher
+  database.ref().on("child_added", function(snapshot) {
 
     // Log everything that's coming out of snapshot
-    console.log(snapshot.val());
-    console.log(snapshot.val().name);
-    console.log(snapshot.val().destination);
-    console.log(snapshot.val().firstTime);
-    console.log(snapshot.val().frequency);
-
-  });
-
-  // Firebase watcher .on("child_added")
-  database.ref().on("child_added", function(snapshot) {
-    // var sv = snapshot.val();
-    
-    // console.log(sv.name);
-    // console.log(sv.destination);
-    // console.log(sv.firstTime);
-    // console.log(sv.frequency);
-    
-    // Handle the errors
-  }, function(errorObject) {
-    console.log("Errors handled: " + errorObject.code)
-
+    var sv = snapshot.val();
+    console.log(sv);
+    console.log(sv.name);
+    console.log(sv.destination);
+    console.log(sv.firstTime);
+    console.log(sv.frequency);
+    console.log(sv.nextArrival)
+    console.log(sv.minsAway)
 
     // Append the information taken from the user input to the train schedule table
-    $("#results-body").append("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + nextArrival + "</td><td>" + minsAway + "</td></tr>");
+    $("#results-body").append("<tr><td>" + sv.name + "</td><td>" + sv.destination + "</td><td>" + sv.frequency + "</td><td>" + sv.nextArrival + "</td><td>" + sv.minsAway + "</td></tr>");
+
+
+
+  }, function(errorObject) {
+    console.log("Errors handled: " + errorObject.code);
+
+
 });
