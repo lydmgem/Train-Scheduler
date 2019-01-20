@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Rye" rel="stylesheet">
+    <!-- Icon -->
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
     
     <title>Train Scheduler</title>
   </head>
@@ -13,32 +18,32 @@
     
     <div class="container">
       <div class="pic">
+        <h1>Choo-Choo Cachoo Express</h1>
         <img src="assets/images/train.png" class="img-fluid" id="train-pic" alt="Train">
       </div>
       
       <div class="currenttrain-card">
         <div class="card-header">
-          <p class="card-p">Current Train Schedule</p>
+          <p class="card-p">Train Schedule</p>
         </div>
         
-        <div class="card-body">
+        <div class="results-card-body">
           <table class="table">
             <thead>
+              <span id="current-time"></span>
               <tr>
                 <th scope="col">Train Name</th>
                 <th scope="col">Destination</th>
                 <th scope="col">Frequency</th>
                 <th scope="col">Next Arrival</th>
                 <th scope="col">Minutes Away</th>
-                
               </tr>
-              
             </thead>
+
             <tbody id="results-body">
               
             </tbody>
           </table>
-          
         </div>
       </div>
       

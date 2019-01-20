@@ -1,29 +1,62 @@
+html {
+    background-color: #fdfcf3;
+}
+
 .container {
     margin: auto;
 }
 
-.pic {
-    background: white;
+.pic, .results-card-body {
     text-align: center;
+}
 
+h1 {
+    font-family: 'Rye', cursive;
+    font-size: 45px;
+    color: maroon;
+}
+
+#current-time {
+    color: maroon;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 20px 0px;
 }
 
 .card-header {
-    background: lightblue;
+    font-family: 'Rye', cursive;
+    font-size: xx-large;
+    color: maroon;
+    background: #faa619;
 }
 
 .card-p {
     margin-bottom: 0;
 }
 
+.card-body, .results-card-body {
+    border: 1px solid;
+    border-color: #faa619;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.card-body {
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: maroon;
+}
+
 .addtrain-card, .currenttrain-card {
     margin-top: 30px;
-    border: 1px solid;
-    border-color: lightblue;
 }
 
 .btn {
-    background: lightblue;
+    background: #faa619;
     color: black;
     border: none;
+}
+
+thead {
+    color: grey;
 }

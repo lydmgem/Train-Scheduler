@@ -20,6 +20,14 @@
   var nextArrival = "";
   var minsAway = "";
 
+// Show current time in train schedule table
+function realTime() {
+  setInterval(function(){
+    $("#current-time").html("Current Time: " + moment().format("h:mm A"))
+  }, 1000);
+}
+realTime();
+
 // Capture button click
 $("#submit-btn").on("click", function(event){
     event.preventDefault();
@@ -91,4 +99,7 @@ $("#submit-btn").on("click", function(event){
 
     // Append the information taken from the user input to the train schedule table
     $("#results-body").append("<tr><td>" + sv.name + "</td><td>" + sv.dest + "</td><td>" + sv.freq + "</td><td>" + nextTrain + "</td><td>" + minutesTillTrain + "</td></tr>");
+
+
+
 });
