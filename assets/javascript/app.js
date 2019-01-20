@@ -99,7 +99,4 @@ $("#submit-btn").on("click", function(event){
 
     // Append the information taken from the user input to the train schedule table
     $("#results-body").append("<tr><td>" + sv.name + "</td><td>" + sv.dest + "</td><td>" + sv.freq + "</td><td>" + nextTrain + "</td><td>" + minutesTillTrain + "</td></tr>");
-
-
-
 });
