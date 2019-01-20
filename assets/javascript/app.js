@@ -38,10 +38,7 @@ $("#submit-btn").on("click", function(event){
       freq: frequency
     };
     
-    console.log(newTrain.name);
-    console.log(newTrain.dest);
-    console.log(newTrain.first);
-    console.log(newTrain.freq);
+    console.log(newTrain);
     
     // Push the input information to the firebase database
     database.ref().push(newTrain);
@@ -51,6 +48,8 @@ $("#submit-btn").on("click", function(event){
     $("#destination").val("");
     $("#first-train-time").val("");
     $("#frequency").val("");
+
+    return false;
   });
   
   // Firebase watcher
