@@ -25,61 +25,71 @@ $("#submit-btn").on("click", function(event){
     event.preventDefault();
     
     // Grabbed values from text-boxes
-    name = $("#train-name").val().trim();
+    tname = $("#train-name").val().trim();
     destination = $("#destination").val().trim();
     firstTime = $("#first-train-time").val().trim();
     frequency = $("#frequency").val().trim();
 
-    // Moment.js function to convert and calculate the arrival time
-    var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
-    console.log(firstTimeConverted);
+    // Object for any new train input
+    var newTrain = {
+      name: tname,
+      dest: destination,
+      first: firstTime,
+      freq: frequency
+    };
     
-    var currentTime = moment();
-    console.log("Currently: " + moment(currentTime).format("hh:mm"));
+    console.log(newTrain.name);
+    console.log(newTrain.dest);
+    console.log(newTrain.first);
+    console.log(newTrain.freq);
     
-    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-    console.log("Difference in Time: " + diffTime);
-    
-    var tRemainder = diffTime % frequency;
-    console.log(tRemainder);
-    
-    var minutesTillTrain = frequency - tRemainder;
-    console.log("Minutes until Train: " + minutesTillTrain);
-    
-    var nextTrain = moment().add(minutesTillTrain, "minutes");
-    console.log("Arrival: " + moment(nextTrain).format("hh:mm"));
+    // Push the input information to the firebase database
+    database.ref().push(newTrain);
 
-    // Code for setting values in the database
-    database.ref().push({
-      name: name,
-      destination: destination,
-      firstTime: firstTimeConverted,
-      frequency: frequency,
-      nextArrival: nextTrain,
-      minsAway: minutesTillTrain
-    });
+    // Clear all input fields after submitting
+    $("#train-name").val("");
+    $("#destination").val("");
+    $("#first-train-time").val("");
+    $("#frequency").val("");
   });
-
+  
   // Firebase watcher
   database.ref().on("child_added", function(snapshot) {
-
+    
     // Log everything that's coming out of snapshot
     var sv = snapshot.val();
     console.log(sv);
     console.log(sv.name);
-    console.log(sv.destination);
-    console.log(sv.firstTime);
-    console.log(sv.frequency);
-    console.log(sv.nextArrival)
-    console.log(sv.minsAway)
+    console.log(sv.dest);
+    console.log(sv.first);
+    console.log(sv.freq);
+    
+    // Moment.js function to convert and calculate the arrival time
+    // First Train Time
+    var firstTimeConverted = moment(sv.first, "HH:mm").subtract(1, "years");
+    console.log(firstTimeConverted);
+    
+    // Current Time
+    var currentTime = moment();
+    console.log("Currently: " + moment(currentTime).format("hh:mm"));
+    
+    // Difference between the first train time to now
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("Difference in Time: " + diffTime);
+    
+    // Time apart
+    var tRemainder = diffTime % sv.freq;
+    console.log(tRemainder);
+    
+    // Minute until train
+    var minutesTillTrain = sv.freq - tRemainder;
+    console.log("Minutes until Train: " + minutesTillTrain);
+    
+    // Next train arrival
+    var nextTrain = moment().add(minutesTillTrain, "minutes").format("hh:mm A");
+    console.log("Arrival: " + nextTrain);
+    
 
     // Append the information taken from the user input to the train schedule table
-    $("#results-body").append("<tr><td>" + sv.name + "</td><td>" + sv.destination + "</td><td>" + sv.frequency + "</td><td>" + sv.nextArrival + "</td><td>" + sv.minsAway + "</td></tr>");
-
-
-
-  }, function(errorObject) {
-    console.log("Errors handled: " + errorObject.code);
-
-
+    $("#results-body").append("<tr><td>" + sv.name + "</td><td>" + sv.dest + "</td><td>" + sv.freq + "</td><td>" + nextTrain + "</td><td>" + minutesTillTrain + "</td></tr>");
 });
