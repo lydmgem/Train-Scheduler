@@ -1,9 +1,6 @@
-html {
-    background-color: #fdfcf3;
-}
-
-.container {
+.container, body {
     margin: auto;
+    background: #fdfcf3;
 }
 
 .pic, .results-card-body {
