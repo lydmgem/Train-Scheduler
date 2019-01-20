@@ -43,7 +43,8 @@ $("#submit-btn").on("click", function(event){
       name: tname,
       dest: destination,
       first: firstTime,
-      freq: frequency
+      freq: frequency,
+      dateAdded: firebase.database.ServerValue.TIMESTAMP
     };
     
     console.log(newTrain);
@@ -70,6 +71,7 @@ $("#submit-btn").on("click", function(event){
     console.log(sv.dest);
     console.log(sv.first);
     console.log(sv.freq);
+    console.log(sv.dateAdded);
     
     // Moment.js function to convert and calculate the arrival time
     // First Train Time
@@ -97,6 +99,10 @@ $("#submit-btn").on("click", function(event){
     console.log("Arrival: " + nextTrain);
     
 
-    // Append the information taken from the user input to the train schedule table
+    // Append the information from the firebase database to the train schedule table
     $("#results-body").append("<tr><td>" + sv.name + "</td><td>" + sv.dest + "</td><td>" + sv.freq + "</td><td>" + nextTrain + "</td><td>" + minutesTillTrain + "</td></tr>");
-});
+
+    // Error handling
+}, function(errorObject) {
+    console.log("Errors handled: " + errorObject.code);
+  });
