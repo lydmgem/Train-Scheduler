@@ -49,6 +49,27 @@ $("#submit-btn").on("click", function(event){
     
     console.log(newTrain);
     
+    // Prevent the user from submitting empty forms
+    if (tname === "") {
+      alert("You must fill out all of the forms in order to move on.");
+      return true;
+    }
+
+    if (destination === "") {
+      alert("You must fill out all of the forms in order to move on.");
+      return true;
+    }
+
+    if (firstTime === "") {
+      alert("You must fill out all of the forms in order to move on.");
+      return true;
+    }
+
+    if (frequency === "") {
+      alert("You must fill out all of the forms in order to move on.");
+      return true;
+    }
+
     // Push the input information to the firebase database
     database.ref().push(newTrain);
 
